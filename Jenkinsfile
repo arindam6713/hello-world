@@ -6,7 +6,7 @@ pipeline {
         sh '''
 #!/bin/bash
 
-HOST="172.31.29.39"
+HOSTS="172.31.29.39"
 COUNT=4
 
 for myHost in $HOSTS
