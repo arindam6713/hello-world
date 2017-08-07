@@ -11,9 +11,18 @@ COUNT=4
 for myHost in $HOSTS
 do
   count=$(ping -c $COUNT $myHost | grep 'received' | awk -F',' '{ print $2 }' | awk '{ print $1 }')
-  if [ $count -eq 0 ]; then
+  if [ $count -eq 4 ]; then
+{
+
     # 100% failed 
-    echo "Host : $myHost is down (ping failed) at $(date)"
+    echo "Host : $myHost is Available: ping passed at $(date)"
+}
+
+  else 
+{
+    # 100% failed 
+    echo "Host : $myHost is Not Available: ping Failed at $(date)"
+}
   fi
 done'''
         waitUntil()
