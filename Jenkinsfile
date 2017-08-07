@@ -5,6 +5,7 @@ pipeline {
       steps {
         sh '''
 #!/bin/bash
+
 HOST="172.31.29.39"
 COUNT=4
 
@@ -12,7 +13,7 @@ COUNT=4
 for myHost in $HOSTS
 do
   count=$(ping -c $COUNT $myHost | grep 'received' | awk -F',' '{ print $2 }' | awk '{ print $1 }')
-  if [[ $count -lt $COUNT ]] ; then
+  if [[ $count -eq $COUNT ]] ; then
   { 
     echo "Host : $myHost is down (ping failed) at $(date)"
   }
