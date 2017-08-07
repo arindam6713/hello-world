@@ -12,7 +12,8 @@ COUNT=4
 
 for myHost in $HOSTS
 do
-  count=$(ping -c $COUNT $myHost | grep 'received' | awk -F',' '{ print $2 }' | awk '{ print $1 }')
+  count=`$(ping -c $COUNT $myHost | grep 'received' | awk -F',' '{ print $2 }' | awk '{ print $1 }')`
+
   if [[ $count -eq $COUNT ]] ; then
   { 
     echo "Host : $myHost is down (ping failed) at $(date)"
