@@ -1,7 +1,7 @@
 pipeline {
   agent any
   stages {
-    stage('Start-Job') {
+    stage('Check-Server-Available') {
       steps {
         sh '''#!/bin/bash
 HOSTS="172.31.29.39"
