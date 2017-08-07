@@ -4,7 +4,7 @@ pipeline {
     stage('Start-Job') {
       steps {
         sh '''#!/bin/bash
-HOSTS="13.126.58.32"
+HOSTS="172.31.29.39"
 
 COUNT=4
 
