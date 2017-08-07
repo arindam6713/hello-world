@@ -3,7 +3,9 @@ pipeline {
   stages {
     stage('Check-Server-Available') {
       steps {
-        sh '''#!/bin/bash
+        parallel(
+          "Check-Server-Available": {
+            sh '''#!/bin/bash
 HOSTS="172.31.29.39"
 
 COUNT=4
@@ -25,7 +27,18 @@ do
 }
   fi
 done'''
-        waitUntil()
+            waitUntil()
+            
+          },
+          "Check-SQL-Service": {
+            sh '''Server="ADAMS-MYSQL"
+Service_Name="mysqld"
+
+ansible-playbook -v /etc/ansible/playbook/service_action_start.yml --extra-vars "HOST=$Server SERVICE=$Service_Name " -e 'ansible_python_interpreter="/usr/bin/env python"'
+'''
+            
+          }
+        )
       }
     }
   }
