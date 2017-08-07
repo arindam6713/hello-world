@@ -3,12 +3,28 @@ pipeline {
   stages {
     stage('Check-Server-Available') {
       steps {
-        sh '''Server="ADAMS-MYSQL"
-Service_Name="mysqld"
+        sh '''
+#!/bin/bash
+HOST="172.31.29.39"
+COUNT=4
 
-ansible-playbook -v /etc/ansible/playbook/service_action_start.yml --extra-vars "HOST=$Server SERVICE=$Service_Name " -e 'ansible_python_interpreter="/usr/bin/env python"'
+
+for myHost in $HOSTS
+do
+  count=$(ping -c $COUNT $myHost | grep 'received' | awk -F',' '{ print $2 }' | awk '{ print $1 }')
+  if [ $count -lt $COUNT ]; then
+  { 
+    echo "Host : $myHost is down (ping failed) at $(date)"
+  }
+else
+{
+
+echo "Host : $myHost is Available (ping Passed) at $(date)"
+  }
+fi
+done
+
 '''
-        build(job: 'Service Action', quietPeriod: 2)
       }
     }
   }
