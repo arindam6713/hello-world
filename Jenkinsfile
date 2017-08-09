@@ -51,5 +51,11 @@ fi
         )
       }
     }
+    stage('Take-Action') {
+      steps {
+        sh '''echo " Taking action based on result of previous jobs"
+'''
+      }
+    }
   }
 }
