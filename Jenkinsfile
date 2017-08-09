@@ -47,6 +47,11 @@ exit 1;
 fi
 '''
             
+          },
+          "Run-Sample-SQL-Query": {
+            sh '''echo " In this script I will connect to the mysql database and run a remote query"
+'''
+            
           }
         )
       }
