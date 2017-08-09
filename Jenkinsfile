@@ -3,7 +3,9 @@ pipeline {
   stages {
     stage('Check-Server-Available') {
       steps {
-        sh '''
+        parallel(
+          "Check-Server-Available": {
+            sh '''
 #!/bin/bash
 
 HOSTS="172.31.29.39";
@@ -26,6 +28,27 @@ fi
 done
 
 '''
+            
+          },
+          "Check-DB-Process": {
+            sh '''echo "Calling Ansible Playbook to check the status of mysqld process"
+
+ansible-playbook /etc/ansible/playbook/check_sql.yml
+
+if [[ $? -eq 0 ]]; then
+{
+echo "Mysqld process in Running"
+}
+else
+{
+echo "Mysqld process is not running"
+exit 1;
+}
+fi
+'''
+            
+          }
+        )
       }
     }
   }
